@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="space-y-8">
+
+    <!-- Hero Banner -->
+    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-indigo-900/40 via-purple-900/30 to-slate-900/60 border border-indigo-500/20 p-6 sm:p-8 backdrop-blur-xl">
+        <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div class="space-y-2">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-medium">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Attendant Active &amp; Ready
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                    Eliva is guarding your phone calls
+                </h1>
+                <p class="text-slate-400 text-sm sm:text-base max-w-2xl">
+                    When you are busy in meetings, coding, or away, Eliva picks up your calls, answers questions instantly, filters spam, and collects concise actionable messages.
+                </p>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="/simulator" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-medium text-sm shadow-lg shadow-indigo-500/25 flex items-center gap-2 transition-all">
+                    <i data-lucide="play" class="w-4 h-4"></i>
+                    Try Simulator
+                </a>
+                <a href="/knowledge-base" class="px-4 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-300 font-medium text-sm transition-all flex items-center gap-2">
+                    <i data-lucide="settings" class="w-4 h-4"></i>
+                    Configure Rules
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status & Stat Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Total Calls -->
+        <div class="p-5 rounded-xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-sm">
+            <div class="flex items-center justify-between">
+                <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Total Calls Handled</span>
+                <div class="p-2 rounded-lg bg-indigo-500/10 text-indigo-400">
+                    <i data-lucide="phone-incoming" class="w-5 h-5"></i>
+                </div>
+            </div>
+            <p class="text-3xl font-bold text-white mt-2">{{ total_calls }}</p>
+            <p class="text-xs text-slate-500 mt-1">Managed automatically</p>
+        </div>
+
+        <!-- Urgent Calls -->
+        <div class="p-5 rounded-xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-sm">
+            <div class="flex items-center justify-between">
+                <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Urgent Inquiries</span>
+                <div class="p-2 rounded-lg bg-rose-500/10 text-rose-400">
+                    <i data-lucide="flame" class="w-5 h-5"></i>
+                </div>
+            </div>
+            <p class="text-3xl font-bold text-rose-400 mt-2">{{ urgent_calls }}</p>
+            <p class="text-xs text-slate-500 mt-1">High-priority alerts</p>
+        </div>
+
+        <!-- Callbacks Needed -->
+        <div class="p-5 rounded-xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-sm">
+            <div class="flex items-center justify-between">
+                <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Callbacks Needed</span>
+                <div class="p-2 rounded-lg bg-amber-500/10 text-amber-400">
+                    <i data-lucide="calendar-clock" class="w-5 h-5"></i>
+                </div>
+            </div>
+            <p class="text-3xl font-bold text-amber-400 mt-2">{{ callback_needed }}</p>
+            <p class="text-xs text-slate-500 mt-1">Callers requesting callback</p>
+        </div>
+
+        <!-- Attendant Status -->
+        <div class="p-5 rounded-xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-sm">
+            <div class="flex items-center justify-between">
+                <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Owner Status</span>
+                <div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-400">
+                    <i data-lucide="user-check" class="w-5 h-5"></i>
+                </div>
+            </div>
+            <p class="text-lg font-semibold text-emerald-400 mt-2 truncate">{{ knowledge.owner.current_status }}</p>
+            <p class="text-xs text-slate-500 mt-1">Answering for {{ knowledge.owner.name }}</p>
+        </div>
+    </div>
+
+    <!-- Active Owner Configuration & Recent Calls Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- Left Column: Owner Profile & Rules Preview -->
+        <div class="lg:col-span-1 space-y-6">
+            <div class="rounded-xl bg-slate-900/60 border border-slate-800/80 p-5 space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <h2 class="text-sm font-semibold text-white flex items-center gap-2">
+                        <i data-lucide="user" class="w-4 h-4 text-indigo-400"></i>
+                        Active Profile
+                    </h2>
+                    <a href="/knowledge-base" class="text-xs text-indigo-400 hover:text-indigo-300">Edit</a>
+                </div>
+
+                <div class="space-y-3 text-xs">
+                    <div>
+                        <span class="text-slate-500 block">Name</span>
+                        <span class="text-slate-200 font-medium">{{ knowledge.owner.name }}</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-500 block">Title</span>
+                        <span class="text-slate-200 font-medium">{{ knowledge.owner.title }}</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-500 block">Current Availability</span>
+                        <span class="text-slate-200 font-medium">{{ knowledge.owner.available_times }}</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-500 block">Contact Email</span>
+                        <span class="text-slate-200 font-medium">{{ knowledge.owner.email }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Twilio Connection Info -->
+            <div class="rounded-xl bg-slate-900/60 border border-slate-800/80 p-5 space-y-3">
+                <h2 class="text-sm font-semibold text-white flex items-center gap-2">
+                    <i data-lucide="webhook" class="w-4 h-4 text-purple-400"></i>
+                    Twilio Webhook Endpoints
+                </h2>
+                <p class="text-xs text-slate-400">Point your Twilio Voice Webhook URL to:</p>
+                <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 text-[11px] font-mono text-indigo-300 select-all overflow-x-auto">
+                    POST https://&lt;your-domain&gt;/voice/incoming
+                </div>
+                <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 text-[11px] font-mono text-purple-300 select-all overflow-x-auto">
+                    Status: POST https://&lt;your-domain&gt;/voice/status
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Recent Calls -->
+        <div class="lg:col-span-2">
+            <div class="rounded-xl bg-slate-900/60 border border-slate-800/80 p-5 space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <h2 class="text-sm font-semibold text-white flex items-center gap-2">
+                        <i data-lucide="list" class="w-4 h-4 text-indigo-400"></i>
+                        Recent Call Activity
+                    </h2>
+                    <a href="/call-logs" class="text-xs text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
+                        View All
+                        <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                    </a>
+                </div>
+
+                {% if logs %}
+                    <div class="space-y-3">
+                        {% for log in logs %}
+                            <div class="p-4 rounded-lg bg-slate-950/60 border border-slate-800/80 hover:border-slate-700/80 transition-all space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <div class="h-7 w-7 rounded-full bg-slate-800 flex items-center justify-center text-slate-300 text-xs font-bold">
+                                            {{ log.extracted_info.caller_name[0]|upper if log.extracted_info and log.extracted_info.caller_name else 'C' }}
+                                        </div>
+                                        <div>
+                                            <span class="text-sm font-semibold text-white">
+                                                {{ log.extracted_info.caller_name if log.extracted_info and log.extracted_info.caller_name else 'Unknown Caller' }}
+                                            </span>
+                                            <span class="text-xs text-slate-500 ml-2 font-mono">{{ log.caller_number }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        {% if log.extracted_info and log.extracted_info.is_urgent %}
+                                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/20 text-rose-400 border border-rose-500/30">URGENT</span>
+                                        {% endif %}
+                                        {% if log.extracted_info and log.extracted_info.category %}
+                                            <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 capitalize">{{ log.extracted_info.category }}</span>
+                                        {% endif %}
+                                        <span class="text-xs text-slate-500">{{ log.start_time.split('T')[1][:5] if log.start_time else '' }}</span>
+                                    </div>
+                                </div>
+
+                                <p class="text-xs text-slate-300 leading-relaxed">
+                                    {{ log.extracted_info.summary if log.extracted_info and log.extracted_info.summary else 'Call recorded. Click view all to read full transcript.' }}
+                                </p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-12 space-y-3">
+                        <div class="h-12 w-12 rounded-full bg-slate-800/80 flex items-center justify-center mx-auto text-slate-500">
+                            <i data-lucide="phone-off" class="w-6 h-6"></i>
+                        </div>
+                        <p class="text-sm font-medium text-slate-400">No calls recorded yet</p>
+                        <p class="text-xs text-slate-500 max-w-sm mx-auto">Use the simulator to test how Eliva talks to callers, or connect Twilio to receive real phone calls.</p>
+                        <a href="/simulator" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium">
+                            <i data-lucide="play" class="w-3.5 h-3.5"></i>
+                            Launch Call Simulator
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

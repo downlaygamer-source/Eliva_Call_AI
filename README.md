@@ -42,7 +42,7 @@ ANTHROPIC_API_KEY=your_anthropic_api_key
 TWILIO_ACCOUNT_SID=your_twilio_sid       # Optional for local simulator
 TWILIO_AUTH_TOKEN=your_twilio_token      # Optional for local simulator
 TWILIO_PHONE_NUMBER=+1234567890          # Optional for local simulator
-MY_NAME=DJ
+MY_NAME=your_name              
 PORT=5000
 ```
 

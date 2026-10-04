@@ -1,0 +1,79 @@
+# Eliva - Environment and Generated Files
+# ========================================
+
+# Environment variables (NEVER commit this file)
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Eliva-specific generated files
+call_logs.json
+knowledge/user_profile.json.backup
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# ngrok
+ngrok.log
+
+# Railway
+.railway/
+
+# Temporary files
+*.tmp
+*.bak
+.cache/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# OS
+Thumbs.db
+Desktop.ini
